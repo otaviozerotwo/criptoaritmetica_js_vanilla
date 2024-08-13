@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Criptoaritmética</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <h1>Calculadora Criptoaritmética</h1>
+  
+  <div class="main-container">
+    <div class="container-parametros">
+      <form id="formParametros">
+        <!-- <h2>Parâmetros</h2> -->
+        
+        
+
+        <div class="container-parametros-content">
+
+          <div class="form-radio-button">
+            <div class="parametros">
+              <h3>Método Seleção</h3>
+              <div>
+                <label for="metodoSelecao">Roleta: </label>
+                <input type="radio" name="metodoSelecao" value="roleta" checked>
+              </div>
+              <div>
+                <label for="metodoSelecao">Torneio:</label>
+                <input type="radio" name="metodoSelecao" value="torneio">
+              </div>
+            </div>
+            <div class="parametros">
+              <h3>Taxa Mutação</h3>
+              <div>
+                <label for="taxaMutacaoPercent">5%: </label>
+                <input type="radio" name="taxaMutacaoPercent" value="5" checked>
+              </div>
+              <div>
+                <label for="taxaMutacaoPercent">10%:</label>
+                <input type="radio" name="taxaMutacaoPercent" value="10">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-radio-button">
+            <div class="parametros">
+              <h3>Tipo Crossover</h3>
+              <div>
+                <label for="tipoCrossover">PMX: </label>
+                <input type="radio" name="tipoCrossover" value="pmx" checked>
+              </div>
+              <div>
+                <label for="tipoCrossover">Cíclico:</label>
+                <input type="radio" name="tipoCrossover" value="ciclico">
+              </div>
+            </div>
+            <div class="parametros">
+              <h3>Taxa Crossover</h3>
+              <div>
+                <label for="taxaCrossoverPercent">60%: </label>
+                <input type="radio" name="taxaCrossoverPercent" value="60" checked>
+              </div>
+              <div>
+                <label for="taxaCrossoverPercent">80%:</label>
+                <input type="radio" name="taxaCrossoverPercent" value="80">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-radio-button">
+            <div class="parametros">
+              <h3>Método Reinserção</h3>
+              <div>
+                <label for="metodoReinsercao">Ordenada: </label>
+                <input type="radio" name="metodoReinsercao" value="ordenada" checked>
+              </div>
+              <div>
+                <label for="metodoReinsercao">Elitismo:</label>
+                <input type="radio" name="metodoReinsercao" value="elitismo">
+              </div>
+            </div>
+            
+            <div class="parametros">
+              <p>Tam. população: 100</p>
+              <p>Num. gerações: 50</p>
+            </div>
+          </div>
+        </div>
+      </form>
+  
+      <form id="formPrincipal">
+        <div class="container-label-input">
+          <label for="primeiraPalavra">Primeira Palavra:</label>
+          <input type="text" id="primeiraPalavra" name="primeiraPalavra" placeholder="SEND" maxlength="10" autocomplete="off" required>
+        </div>
+        
+        <div class="container-label-input">
+          <label for="segundaPalavra">Segunda Palavra:</label>
+          <input type="text" id="segundaPalavra" name="segundaPalavra" placeholder="MORE" maxlength="10" autocomplete="off" required>
+        </div>
+        
+        <div class="container-label-input">
+          <label for="palavraResultante">Palavra Resultante:</label>
+          <input type="text" id="palavraResultante" name="palavraResultante" placeholder="MONEY" maxlength="10" autocomplete="off" required>
+        </div>
+        
+        <div class="container-button">
+          <button type="submit">Calcular</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="containerResultado">
+      <h2>Resultado</h2>
+      
+      <div class="resultado">
+        <pre>
+          <span id="primeiraPalavraSpan"></span>
+        + <span id="segundaPalavraSpan"></span>
+        _________________
+          <span id="palavraResultanteSpan"></span>
+      
+          <span id="primeiraPalavraNumero"></span>
+        + <span id="segundaPalavraNumero"></span>
+        _________________
+          <span id="palavraResultanteNumero"></span>
+        </pre>
+        <pre id="cromossomoFormatado"></pre>
+        <pre>
+  
+        Fitness: <span id="fitness"></span>
+        </pre>
+      </div>
+
+      <div class="mensagem-erro-api">
+        <p>Erro: <span id="mensagemErroAPI"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
