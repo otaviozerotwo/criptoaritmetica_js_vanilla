@@ -16,7 +16,6 @@ function gerarCromossomo(alfabeto) {
 
 // Função para converter uma palavra em um número baseado no cromossomo
 function palavraParaNumero(palavra, cromossomo) {
-  // console.log(`Cromossomo usado: ${JSON.stringify(cromossomo)}`); // Log do cromossomo usado
   const numeros = palavra.split('').map(letra => cromossomo[letra]);
 
   return parseInt(numeros.join(''), 10);
@@ -204,6 +203,7 @@ function criptoaritmeticaAG(
   // Cria a população inicial
   let populacao = Array.from({ length: tamanhoPopulacao }, () => {
     const cromossomo = gerarCromossomo(alfabeto);
+
     return {
       cromossomo,
       fitness: calcularFitness(problema, cromossomo)
@@ -270,8 +270,6 @@ function criptoaritmeticaAG(
   const melhorIndividuo = populacao.reduce((melhor, individuo) => {
     return (individuo.fitness < melhor.fitness) ? individuo : melhor;
   });
-
-  // console.log("Melhor indivíduo após todas as gerações:", melhorIndividuo);
 
   return {
     primeiraPalavra: problema[0],

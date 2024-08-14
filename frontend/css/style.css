@@ -15,7 +15,7 @@ body {
   justify-content: center;
   align-items: start;
   width: 100%;
-  height: 564px;
+  height: 578px;
   padding: 20px;
 }
 
@@ -33,7 +33,7 @@ h1 {
 #formPrincipal,
 #formParametros {
   width: 624px;
-  padding: 10px 20px;
+  padding: 14px 20px;
   margin-bottom: 20px;
   margin-right: 20px;
   background-color: #FFFFFF;
