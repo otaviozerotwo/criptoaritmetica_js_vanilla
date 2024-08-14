@@ -91,12 +91,6 @@ h1 {
   display: flex;
 }
 
-.container-parametros #formParametros .parametros p {
-  display: flex;
-  color: #007BFF;
-  font-weight: 600;
-}
-
 .form-radio-button {
   display: flex;
   flex-wrap: wrap;
@@ -114,7 +108,16 @@ h1 {
   justify-content: space-between;
   align-items: center;
   gap: 5px;
-  width: 75%;
+}
+
+.parametros #tamPopulacao,
+.parametros #numGeracoes {
+  display: flex;
+  color: #007BFF;
+  font-weight: 600;
+  width: 44px;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
 }
 
 #containerResultado {

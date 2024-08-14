@@ -27,6 +27,8 @@ formPrincipal.addEventListener('submit', async (event) => {
   const tipoCrossover = document.querySelector('input[name="tipoCrossover"]:checked').value;
   const taxaCrossoverPercent = document.querySelector('input[name="taxaCrossoverPercent"]:checked').value;
   const metodoReinsercao = document.querySelector('input[name="metodoReinsercao"]:checked').value;
+  const tamanhoPopulacao = document.querySelector('#tamPopulacao').value;
+  const numMaxGeracoes = document.querySelector('#numGeracoes').value;
 
   // Cria o objeto com os parâmetros
   const params = {
@@ -38,8 +40,8 @@ formPrincipal.addEventListener('submit', async (event) => {
     tipoCrossover, 
     taxaCrossoverPercent, 
     metodoReinsercao,
-    tamanhoPopulacao: 100, 
-    numMaxGeracoes: 50 
+    tamanhoPopulacao,
+    numMaxGeracoes 
   };
 
   try {
