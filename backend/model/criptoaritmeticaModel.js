@@ -1,9 +1,7 @@
-// Função para criar o alfabeto único a partir do problema
 function criarAlfabeto(problema) {
   return [...new Set(problema.join('').replace(/\s|\+/g, ''))];
 }
 
-// Função para gerar um cromossomo aleatório
 function gerarCromossomo(alfabeto) {
   const digitos = Array.from({ length: 10 }, (_, i) => i);
   const embaralhamento = arr => arr.sort(() => Math.random() - 0.5);
@@ -14,25 +12,21 @@ function gerarCromossomo(alfabeto) {
   return cromossomo;
 }
 
-// Função para converter uma palavra em um número baseado no cromossomo
 function palavraParaNumero(palavra, cromossomo) {
   const numeros = palavra.split('').map(letra => cromossomo[letra]);
 
   return parseInt(numeros.join(''), 10);
 }
 
-// Função de cálculo do fitness
 function calcularFitness(problema, cromossomo) {
   const [primeiraPalavra, segundaPalavra, palavraResultante] = problema;
   const numero1 = palavraParaNumero(primeiraPalavra, cromossomo);
   const numero2 = palavraParaNumero(segundaPalavra, cromossomo);
   const resultadoCalculado = palavraParaNumero(palavraResultante, cromossomo);
 
-  // Calcula a diferença absoluta entre a soma das duas palavras e o resultado esperado
   return Math.abs((numero1 + numero2) - resultadoCalculado);
 }
 
-// Função de seleção por roleta
 function selecaoPorRoleta(populacao) {
   const somaFitness = populacao.reduce((soma, individuo) => soma + (1 / (individuo.fitness + 1)), 0); // Evita divisão por zero
   const limite = Math.random() * somaFitness;
@@ -49,7 +43,6 @@ function selecaoPorRoleta(populacao) {
   return populacao[populacao.length - 1]; // Em caso de erro, retorna o último indivíduo
 }
 
-// Função de seleção por torneio
 function selecaoPorTorneio(populacao, tamanhoTorneio = 3) {
   const torneio = [];
   
@@ -64,7 +57,6 @@ function selecaoPorTorneio(populacao, tamanhoTorneio = 3) {
   });
 }
 
-// Crossover Cíclico
 function crossoverCiclico(pai1, pai2) {
   const filho1 = { ...pai1 };
   const filho2 = { ...pai2 };
@@ -83,7 +75,6 @@ function crossoverCiclico(pai1, pai2) {
   return [filho1, filho2];
 }
 
-// Crossover PMX
 function crossoverPMX(pai1, pai2) {
   const filho1 = { ...pai1 };
   const filho2 = { ...pai2 };
@@ -95,34 +86,33 @@ function crossoverPMX(pai1, pai2) {
   const mapa1 = {};
   const mapa2 = {};
 
-  // // Troca a seção entre os pontos de corte
-  // for (let i = ponto1; i < ponto2; i++) {
-  //   const key = keys[i];
-  //   mapa1[pai2[key]] = pai1[key];
-  //   mapa2[pai1[key]] = pai2[key];
-  //   filho1[key] = pai2[key];
-  //   filho2[key] = pai1[key];
-  // }
+  // Troca a seção entre os pontos de corte
+  for (let i = ponto1; i < ponto2; i++) {
+    const key = keys[i];
+    mapa1[pai2[key]] = pai1[key];
+    mapa2[pai1[key]] = pai2[key];
+    filho1[key] = pai2[key];
+    filho2[key] = pai1[key];
+  }
 
-  // // Corrige conflitos fora da seção trocada
-  // for (let i = 0; i < keys.length; i++) {
-  //   if (i >= ponto1 && i < ponto2) continue;
+  // Corrige conflitos fora da seção trocada
+  for (let i = 0; i < keys.length; i++) {
+    if (i >= ponto1 && i < ponto2) continue;
 
-  //   const key = keys[i];
+    const key = keys[i];
 
-  //   while (mapa1[filho1[key]]) {
-  //     filho1[key] = mapa1[filho1[key]];
-  //   }
+    while (mapa1[filho1[key]]) {
+      filho1[key] = mapa1[filho1[key]];
+    }
 
-  //   while (mapa2[filho2[key]]) {
-  //     filho2[key] = mapa2[filho2[key]];
-  //   }
-  // }
+    while (mapa2[filho2[key]]) {
+      filho2[key] = mapa2[filho2[key]];
+    }
+  }
 
   return [filho1, filho2];
 }
 
-// Função de crossover principal
 function crossover(pai1, pai2, tipoCrossover, taxaCrossover) {
   if (Math.random() > taxaCrossover) {
     return [pai1.cromossomo, pai2.cromossomo]; // Sem crossover
@@ -139,7 +129,6 @@ function crossover(pai1, pai2, tipoCrossover, taxaCrossover) {
   return filhos;
 }
 
-// Função de mutação
 function mutacao(cromossomo, taxaMutacao) {
   const novoCromossomo = { ...cromossomo };
 
@@ -185,7 +174,6 @@ function reinsercaoPuraComElitismo(populacao, novaPopulacao, tamanhoPopulacao) {
   return elite.concat(novaPopulacaoRestante);
 }
 
-// Função principal para configurar e executar o algoritmo genético
 async function criptoaritmeticaAG(
   problema, 
   metodoSelecao, 

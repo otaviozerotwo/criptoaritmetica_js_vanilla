@@ -16,10 +16,24 @@ const classMensagemErroAPI = document.querySelector('.mensagem-erro-api');
 const mensagemErroAPI = document.querySelector('#mensagemErroAPI');
 const melhoresIndividuos = document.querySelector('#melhoresIndividuos');
 
-formPrincipal.addEventListener('submit', async (event) => {
-  event.preventDefault(); // Previne o comportamento padrão do formulário
+const metodoReinsercaoRadios = document.querySelectorAll('input[name="metodoReinsercao"]');
+const taxaCrossoverRadios = document.querySelectorAll('input[name="taxaCrossoverPercent"]');
 
-  // Captura os valores do formulário
+metodoReinsercaoRadios.forEach(radio => {
+  radio.addEventListener('change', function() {
+    if (this.value === 'elitismo') {
+      taxaCrossoverRadios.forEach(crossoverRadio => {
+        if (crossoverRadio.value === '80') {
+          crossoverRadio.checked = true; 
+        }
+      });
+    }
+  });
+});
+
+formPrincipal.addEventListener('submit', async (event) => {
+  event.preventDefault(); 
+
   const primeiraPalavra = document.querySelector('#primeiraPalavra').value.toUpperCase();
   const segundaPalavra = document.querySelector('#segundaPalavra').value.toUpperCase();
   const palavraResultante = document.querySelector('#palavraResultante').value.toUpperCase();
@@ -31,7 +45,6 @@ formPrincipal.addEventListener('submit', async (event) => {
   const tamanhoPopulacao = document.querySelector('#tamPopulacao').value;
   const numMaxGeracoes = document.querySelector('#numGeracoes').value;
 
-  // Cria o objeto com os parâmetros
   const params = {
     primeiraPalavra,
     segundaPalavra,
@@ -46,7 +59,6 @@ formPrincipal.addEventListener('submit', async (event) => {
   };
 
   try {
-    // Envia os parâmetros via POST
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -64,7 +76,6 @@ formPrincipal.addEventListener('submit', async (event) => {
     segundaPalavraNumeroElement.textContent = data.resultado.segundaPalavraNumero;
     palavraResultanteNumeroElement.textContent = data.resultado.palavraResultanteNumero;
 
-    // Formata o cromossomo para exibição
     const cromossomoFormatado = Object.entries(data.resultado.cromossomo)
       .map(([letra, valor]) => `        ${letra}: ${valor}`)
       .join('<br>');
@@ -74,7 +85,6 @@ formPrincipal.addEventListener('submit', async (event) => {
     fitnessElement.textContent = data.resultado.fitness;
 
     melhoresIndividuos.href = `./pages/melhoresIndividuos.html?dados=${encodeURIComponent(JSON.stringify(data.resultado.melhoresIndividuos))}`;
-
 
     classMensagemErroAPI.style.display = 'none';
     classResultado.style.display = 'block';
