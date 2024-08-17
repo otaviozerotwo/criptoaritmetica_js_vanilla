@@ -15,7 +15,7 @@ const criptoaritmeticaController = {
       const tamanhoPopulacao = req.body.tamanhoPopulacao 
       const numMaxGeracoes = req.body.numMaxGeracoes 
 
-      const resultado = criptoaritmeticaModel.criptoaritmeticaAG(
+      const resultado = await criptoaritmeticaModel.criptoaritmeticaAG(
         problema,
         metodoSelecao,
         taxaMutacaoPercent,
