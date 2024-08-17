@@ -95,35 +95,35 @@ function crossoverPMX(pai1, pai2) {
   const mapa1 = {};
   const mapa2 = {};
 
-  // Troca a seção entre os pontos de corte
-  for (let i = ponto1; i < ponto2; i++) {
-    const key = keys[i];
-    mapa1[pai2[key]] = pai1[key];
-    mapa2[pai1[key]] = pai2[key];
-    filho1[key] = pai2[key];
-    filho2[key] = pai1[key];
-  }
+  // // Troca a seção entre os pontos de corte
+  // for (let i = ponto1; i < ponto2; i++) {
+  //   const key = keys[i];
+  //   mapa1[pai2[key]] = pai1[key];
+  //   mapa2[pai1[key]] = pai2[key];
+  //   filho1[key] = pai2[key];
+  //   filho2[key] = pai1[key];
+  // }
 
-  // Corrige conflitos fora da seção trocada
-  for (let i = 0; i < keys.length; i++) {
-    if (i >= ponto1 && i < ponto2) continue;
+  // // Corrige conflitos fora da seção trocada
+  // for (let i = 0; i < keys.length; i++) {
+  //   if (i >= ponto1 && i < ponto2) continue;
 
-    const key = keys[i];
+  //   const key = keys[i];
 
-    while (mapa1[filho1[key]]) {
-      filho1[key] = mapa1[filho1[key]];
-    }
+  //   while (mapa1[filho1[key]]) {
+  //     filho1[key] = mapa1[filho1[key]];
+  //   }
 
-    while (mapa2[filho2[key]]) {
-      filho2[key] = mapa2[filho2[key]];
-    }
-  }
+  //   while (mapa2[filho2[key]]) {
+  //     filho2[key] = mapa2[filho2[key]];
+  //   }
+  // }
 
   return [filho1, filho2];
 }
 
 // Função de crossover principal
-function crossover(pai1, pai2, tipoCrossover = 'pmx', taxaCrossover = 0.8) {
+function crossover(pai1, pai2, tipoCrossover, taxaCrossover) {
   if (Math.random() > taxaCrossover) {
     return [pai1.cromossomo, pai2.cromossomo]; // Sem crossover
   }
@@ -132,7 +132,7 @@ function crossover(pai1, pai2, tipoCrossover = 'pmx', taxaCrossover = 0.8) {
 
   if (tipoCrossover === 'ciclico') {
     filhos = crossoverCiclico(pai1.cromossomo, pai2.cromossomo);
-  } else {
+  } else if (tipoCrossover === 'pmx') {
     filhos = crossoverPMX(pai1.cromossomo, pai2.cromossomo);
   }
 
@@ -140,7 +140,7 @@ function crossover(pai1, pai2, tipoCrossover = 'pmx', taxaCrossover = 0.8) {
 }
 
 // Função de mutação
-function mutacao(cromossomo, taxaMutacao = 0.05) {
+function mutacao(cromossomo, taxaMutacao) {
   const novoCromossomo = { ...cromossomo };
 
   // Itera sobre cada gene do cromossomo
@@ -186,7 +186,7 @@ function reinsercaoPuraComElitismo(populacao, novaPopulacao, tamanhoPopulacao) {
 }
 
 // Função principal para configurar e executar o algoritmo genético
-function criptoaritmeticaAG(
+async function criptoaritmeticaAG(
   problema, 
   metodoSelecao, 
   taxaMutacaoPercent, 
@@ -196,6 +196,7 @@ function criptoaritmeticaAG(
   tamanhoPopulacao,
   numMaxGeracoes 
 ) {
+
   const alfabeto = criarAlfabeto(problema);
   const taxaMutacao = taxaMutacaoPercent / 100; // Converte para proporção
   const taxaCrossover = taxaCrossoverPercent / 100; // Converte para proporção
@@ -211,6 +212,7 @@ function criptoaritmeticaAG(
   });
 
   const selecao = (metodoSelecao === 'roleta') ? selecaoPorRoleta : selecaoPorTorneio;
+  const melhoresIndividuos = [];
 
   // Evolução por várias gerações
   for (let geracao = 0; geracao < numMaxGeracoes; geracao++) {
@@ -250,7 +252,11 @@ function criptoaritmeticaAG(
       return (individuo.fitness < melhor.fitness) ? individuo : melhor;
     });
 
-    // console.log(`Geração ${geracao + 1}: Melhor indivíduo:`, melhorIndividuo);
+    melhoresIndividuos.push({
+      geracao: geracao + 1,
+      cromossomo: melhorIndividuo.cromossomo,
+      fitness: melhorIndividuo.fitness
+    });
 
     if (melhorIndividuo.fitness === 0) {
       return {
@@ -261,7 +267,8 @@ function criptoaritmeticaAG(
         segundaPalavraNumero: palavraParaNumero(problema[1], melhorIndividuo.cromossomo),
         palavraResultanteNumero: palavraParaNumero(problema[2], melhorIndividuo.cromossomo),
         cromossomo: melhorIndividuo.cromossomo,
-        fitness: melhorIndividuo.fitness
+        fitness: melhorIndividuo.fitness,
+        melhoresIndividuos
       };
     }
   }
@@ -279,7 +286,8 @@ function criptoaritmeticaAG(
     segundaPalavraNumero: palavraParaNumero(problema[1], melhorIndividuo.cromossomo),
     palavraResultanteNumero: palavraParaNumero(problema[2], melhorIndividuo.cromossomo),
     cromossomo: melhorIndividuo.cromossomo,
-    fitness: melhorIndividuo.fitness
+    fitness: melhorIndividuo.fitness,
+    melhoresIndividuos
   };
 }
 

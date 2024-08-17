@@ -14,6 +14,7 @@ const fitnessElement = document.querySelector('#fitness');
 const classResultado = document.querySelector('.resultado');
 const classMensagemErroAPI = document.querySelector('.mensagem-erro-api');
 const mensagemErroAPI = document.querySelector('#mensagemErroAPI');
+const melhoresIndividuos = document.querySelector('#melhoresIndividuos');
 
 formPrincipal.addEventListener('submit', async (event) => {
   event.preventDefault(); // Previne o comportamento padrão do formulário
@@ -71,6 +72,9 @@ formPrincipal.addEventListener('submit', async (event) => {
     cromossomoFormatadoElement.innerHTML = cromossomoFormatado;
 
     fitnessElement.textContent = data.resultado.fitness;
+
+    melhoresIndividuos.href = `./pages/melhoresIndividuos.html?dados=${encodeURIComponent(JSON.stringify(data.resultado.melhoresIndividuos))}`;
+
 
     classMensagemErroAPI.style.display = 'none';
     classResultado.style.display = 'block';
