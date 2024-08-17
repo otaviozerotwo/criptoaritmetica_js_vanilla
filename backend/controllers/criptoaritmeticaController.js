@@ -7,13 +7,13 @@ const criptoaritmeticaController = {
 
       const problema = [primeiraPalavra, segundaPalavra, palavraResultante];
 
-      const metodoSelecao = req.body.metodoSelecao //|| 'torneio'; 
-      const taxaMutacaoPercent = req.body.taxaMutacaoPercent //|| 5; 
-      const taxaCrossoverPercent = req.body.taxaCrossoverPercent //|| 60; 
-      const tipoCrossover = req.body.tipoCrossover //|| 'pmx';
-      const metodoReinsercao = req.body.metodoReinsercao //|| 'ordenada'; 
-      const tamanhoPopulacao = req.body.tamanhoPopulacao //|| 100; 
-      const numMaxGeracoes = req.body.numMaxGeracoes //|| 50
+      const metodoSelecao = req.body.metodoSelecao 
+      const taxaMutacaoPercent = req.body.taxaMutacaoPercent 
+      const taxaCrossoverPercent = req.body.taxaCrossoverPercent 
+      const tipoCrossover = req.body.tipoCrossover 
+      const metodoReinsercao = req.body.metodoReinsercao 
+      const tamanhoPopulacao = req.body.tamanhoPopulacao 
+      const numMaxGeracoes = req.body.numMaxGeracoes 
 
       const resultado = criptoaritmeticaModel.criptoaritmeticaAG(
         problema,
