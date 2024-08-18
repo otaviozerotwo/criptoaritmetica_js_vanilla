@@ -86,29 +86,31 @@ function crossoverPMX(pai1, pai2) {
   const mapa1 = {};
   const mapa2 = {};
 
-  // Troca a seção entre os pontos de corte
-  for (let i = ponto1; i < ponto2; i++) {
-    const key = keys[i];
-    mapa1[pai2[key]] = pai1[key];
-    mapa2[pai1[key]] = pai2[key];
-    filho1[key] = pai2[key];
-    filho2[key] = pai1[key];
-  }
-
-  // Corrige conflitos fora da seção trocada
-  for (let i = 0; i < keys.length; i++) {
-    if (i >= ponto1 && i < ponto2) continue;
-
-    const key = keys[i];
-
-    while (mapa1[filho1[key]]) {
-      filho1[key] = mapa1[filho1[key]];
+  setTimeout(() => {
+    // Troca a seção entre os pontos de corte
+    for (let i = ponto1; i < ponto2; i++) {
+      const key = keys[i];
+      mapa1[pai2[key]] = pai1[key];
+      mapa2[pai1[key]] = pai2[key];
+      filho1[key] = pai2[key];
+      filho2[key] = pai1[key];
     }
-
-    while (mapa2[filho2[key]]) {
-      filho2[key] = mapa2[filho2[key]];
+  
+    // Corrige conflitos fora da seção trocada
+    for (let i = 0; i < keys.length; i++) {
+      if (i >= ponto1 && i < ponto2) continue;
+  
+      const key = keys[i];
+  
+      while (mapa1[filho1[key]]) {
+        filho1[key] = mapa1[filho1[key]];
+      }
+  
+      while (mapa2[filho2[key]]) {
+        filho2[key] = mapa2[filho2[key]];
+      }
     }
-  }
+  }, 200);
 
   return [filho1, filho2];
 }
