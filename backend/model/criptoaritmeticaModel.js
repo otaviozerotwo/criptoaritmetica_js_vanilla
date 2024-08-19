@@ -40,7 +40,7 @@ function selecaoPorRoleta(populacao) {
     }
   }
 
-  return populacao[populacao.length - 1]; // Em caso de erro, retorna o último indivíduo
+  return populacao[populacao.length - 1]; 
 }
 
 function selecaoPorTorneio(populacao, tamanhoTorneio = 3) {
@@ -51,7 +51,6 @@ function selecaoPorTorneio(populacao, tamanhoTorneio = 3) {
     torneio.push(individuoAleatorio);
   }
 
-  // Retorna o indivíduo com o melhor fitness (menor valor)
   return torneio.reduce((melhor, individuo) => {
     return (individuo.fitness < melhor.fitness) ? individuo : melhor;
   });
@@ -87,7 +86,6 @@ function crossoverPMX(pai1, pai2) {
   const mapa2 = {};
 
   setTimeout(() => {
-    // Troca a seção entre os pontos de corte
     for (let i = ponto1; i < ponto2; i++) {
       const key = keys[i];
       mapa1[pai2[key]] = pai1[key];
@@ -96,7 +94,6 @@ function crossoverPMX(pai1, pai2) {
       filho2[key] = pai1[key];
     }
   
-    // Corrige conflitos fora da seção trocada
     for (let i = 0; i < keys.length; i++) {
       if (i >= ponto1 && i < ponto2) continue;
   
@@ -134,15 +131,12 @@ function crossover(pai1, pai2, tipoCrossover, taxaCrossover) {
 function mutacao(cromossomo, taxaMutacao) {
   const novoCromossomo = { ...cromossomo };
 
-  // Itera sobre cada gene do cromossomo
   for (let letra in novoCromossomo) {
     if (Math.random() < taxaMutacao) {
       const alfabeto = Object.keys(novoCromossomo);
       
-      // Escolhe uma letra diferente aleatória para troca
       const outraLetra = alfabeto.filter(l => l !== letra)[Math.floor(Math.random() * (alfabeto.length - 1))];
       
-      // Troca os valores entre as letras selecionadas
       const temp = novoCromossomo[letra];
       novoCromossomo[letra] = novoCromossomo[outraLetra];
       novoCromossomo[outraLetra] = temp;
@@ -153,26 +147,20 @@ function mutacao(cromossomo, taxaMutacao) {
 }
 
 function reinsercaoOrdenada(populacao, novaPopulacao, tamanhoPopulacao) {
-  // Combina a população atual com a nova população
   const combinada = populacao.concat(novaPopulacao);
 
-  // Ordena pela melhor fitness (menor valor de fitness)
   combinada.sort((a, b) => a.fitness - b.fitness);
 
-  // Retorna os melhores indivíduos até preencher o tamanho da população
   return combinada.slice(0, tamanhoPopulacao);
 }
 
 function reinsercaoPuraComElitismo(populacao, novaPopulacao, tamanhoPopulacao) {
   const numElitismo = Math.floor(tamanhoPopulacao * 0.2);
 
-  // Seleciona os 20% melhores indivíduos da população atual
   const elite = populacao.slice().sort((a, b) => a.fitness - b.fitness).slice(0, numElitismo);
 
-  // Seleciona os restantes 80% da nova população
   const novaPopulacaoRestante = novaPopulacao.slice(0, tamanhoPopulacao - numElitismo);
 
-  // Combina a elite com os novos filhos
   return elite.concat(novaPopulacaoRestante);
 }
 
@@ -188,10 +176,9 @@ async function criptoaritmeticaAG(
 ) {
 
   const alfabeto = criarAlfabeto(problema);
-  const taxaMutacao = taxaMutacaoPercent / 100; // Converte para proporção
-  const taxaCrossover = taxaCrossoverPercent / 100; // Converte para proporção
+  const taxaMutacao = taxaMutacaoPercent / 100; 
+  const taxaCrossover = taxaCrossoverPercent / 100; 
 
-  // Cria a população inicial
   let populacao = Array.from({ length: tamanhoPopulacao }, () => {
     const cromossomo = gerarCromossomo(alfabeto);
 
@@ -204,7 +191,6 @@ async function criptoaritmeticaAG(
   const selecao = (metodoSelecao === 'roleta') ? selecaoPorRoleta : selecaoPorTorneio;
   const melhoresIndividuos = [];
 
-  // Evolução por várias gerações
   for (let geracao = 0; geracao < numMaxGeracoes; geracao++) {
     const novaPopulacao = [];
 
@@ -230,14 +216,12 @@ async function criptoaritmeticaAG(
       }
     }
 
-    // Aplica o método de reinserção
     if (metodoReinsercao === 'ordenada') {
       populacao = reinsercaoOrdenada(populacao, novaPopulacao, tamanhoPopulacao);
     } else if (metodoReinsercao === 'elitismo') {
       populacao = reinsercaoPuraComElitismo(populacao, novaPopulacao, tamanhoPopulacao);
     }
 
-    // Verifica se encontrou uma solução perfeita
     const melhorIndividuo = populacao.reduce((melhor, individuo) => {
       return (individuo.fitness < melhor.fitness) ? individuo : melhor;
     });
@@ -263,7 +247,6 @@ async function criptoaritmeticaAG(
     }
   }
 
-  // Retorna o melhor indivíduo após todas as gerações
   const melhorIndividuo = populacao.reduce((melhor, individuo) => {
     return (individuo.fitness < melhor.fitness) ? individuo : melhor;
   });
