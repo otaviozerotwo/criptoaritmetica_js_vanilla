@@ -1,4 +1,6 @@
-const url = 'http://localhost:3000/api/criptoaritmetica';
+const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_BASE_URL = isLocalHost && window.location.port !== '3000' ? 'http://localhost:3000' : '';
+const url = `${API_BASE_URL}/api/criptoaritmetica`;
 
 const formPrincipal = document.querySelector('#formPrincipal');
 const containerResultado = document.querySelector('#containerResultado');
@@ -20,11 +22,11 @@ const metodoReinsercaoRadios = document.querySelectorAll('input[name="metodoRein
 const taxaCrossoverRadios = document.querySelectorAll('input[name="taxaCrossoverPercent"]');
 
 metodoReinsercaoRadios.forEach(radio => {
-  radio.addEventListener('change', function() {
+  radio.addEventListener('change', function () {
     if (this.value === 'elitismo') {
       taxaCrossoverRadios.forEach(crossoverRadio => {
         if (crossoverRadio.value === '80') {
-          crossoverRadio.checked = true; 
+          crossoverRadio.checked = true;
         }
       });
     }
@@ -32,7 +34,7 @@ metodoReinsercaoRadios.forEach(radio => {
 });
 
 formPrincipal.addEventListener('submit', async (event) => {
-  event.preventDefault(); 
+  event.preventDefault();
 
   const primeiraPalavra = document.querySelector('#primeiraPalavra').value.toUpperCase();
   const segundaPalavra = document.querySelector('#segundaPalavra').value.toUpperCase();
@@ -51,11 +53,11 @@ formPrincipal.addEventListener('submit', async (event) => {
     palavraResultante,
     metodoSelecao,
     taxaMutacaoPercent,
-    tipoCrossover, 
-    taxaCrossoverPercent, 
+    tipoCrossover,
+    taxaCrossoverPercent,
     metodoReinsercao,
     tamanhoPopulacao,
-    numMaxGeracoes 
+    numMaxGeracoes
   };
 
   try {

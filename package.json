@@ -1,0 +1,25 @@
+{
+  "name": "calculadora_criptoaritmetica_monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/otaviozerotwo/criptoaritmetica_js_vanilla#readme",
+  "bugs": {
+    "url": "https://github.com/otaviozerotwo/criptoaritmetica_js_vanilla/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otaviozerotwo/criptoaritmetica_js_vanilla.git"
+  },
+  "license": "ISC",
+  "author": "Otávio Cardoso",
+  "type": "commonjs",
+  "main": "api/index.js",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "start": "node backend/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

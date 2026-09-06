@@ -10,6 +10,10 @@ server.use(express.json());
 
 server.use('/api', routes);
 
-server.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  server.listen(port, () => {
+    console.log(`Servidor rodando em http://localhost:${port}`);
+  });
+}
+
+module.exports = server;
