@@ -2,13 +2,13 @@
   "name": "calculadora_criptoaritmetica_monorepo",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/otaviozerotwo/criptoaritmetica_js_vanilla#readme",
+  "homepage": "https://github.com/otaviozerotwo/calculadora_criptoaritmetica#readme",
   "bugs": {
-    "url": "https://github.com/otaviozerotwo/criptoaritmetica_js_vanilla/issues"
+    "url": "https://github.com/otaviozerotwo/calculadora_criptoaritmetica/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/otaviozerotwo/criptoaritmetica_js_vanilla.git"
+    "url": "git+https://github.com/otaviozerotwo/calculadora_criptoaritmetica.git"
   },
   "license": "ISC",
   "author": "Otávio Cardoso",
